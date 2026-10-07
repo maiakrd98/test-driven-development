@@ -1,6 +1,7 @@
 import os
 import sys
 import unittest
+sys.path.append("src")  # noqa
 import fire_gdp 
 
 
