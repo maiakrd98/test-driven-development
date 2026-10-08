@@ -124,6 +124,14 @@ class TestGetColumnIndex(unittest.TestCase):
                          str(cm.warning))
         self.assertIsNone(result)
 
+    def test_get_data_file_not_found(self):
+        file_name = "test/data/Agrofood_co2_emision_test.csv"
+        with self.assertRaises(SystemExit) as cm:
+            fire_gdp.get_data(file_name)
+        self.assertEqual("Could not find test/data/"
+                         "Agrofood_co2_emision_test.csv",
+                         str(cm.exception))
+
 
 if __name__ == '__main__':
     unittest.main()
