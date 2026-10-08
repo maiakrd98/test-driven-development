@@ -1,5 +1,6 @@
 import sys
 
+
 def get_data(file_name,
              query_column=None,
              query_value=None,
@@ -8,7 +9,10 @@ def get_data(file_name,
     if query_value is None and query_column is not None:
         sys.exit("You input a query_column, but not a query_value, please "
                  "enter either both or neither")
-    
+    if query_column is None and query_value is not None:
+        sys.exit("You input a query_value, but not a query_column, please "
+                 "enter either both or neither")
+
     results = []
 
     file = open(file_name, 'r')
