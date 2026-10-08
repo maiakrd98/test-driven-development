@@ -250,6 +250,23 @@ class TestGetFireGdpYearData(unittest.TestCase):
 
         self.assertEqual(result, expected_result)
 
+    def test_tanzania_crops(self):
+        co2_file = "test/data/Agrofood_co2_emission_test.csv"
+        gdp_file = "test/data/IMF_GDP_test.csv"
+        em_name = "Crop Residues"
+        country = "United Republic of Tanzania"
+
+        result = fire_gdp.get_fire_gdp_year_data(co2_file,
+                                                 gdp_file,
+                                                 country,
+                                                 emission_col_name=em_name)
+
+        expected_result = [[2018, 712.0791, 123989405.68],
+                           [2019, 700.7068, 134383845.93],
+                           [2020, 859.0343, 145429645.07]]
+
+        self.assertEqual(result, expected_result)
+
 
 if __name__ == '__main__':
     unittest.main()
