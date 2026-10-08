@@ -55,6 +55,10 @@ def get_data(file_name,
 
 def get_column_index(header, column_name):
 
+    if header is None:
+            warnings.warn("Warning: you have entered None as a header", UserWarning)
+            return None
+
     if len(header) == 0:
         warnings.warn("Warning: you have entered an empty header", UserWarning)
         return None
