@@ -1,4 +1,5 @@
 import sys
+import warnings
 
 
 def get_data(file_name,
@@ -19,15 +20,23 @@ def get_data(file_name,
 
     header = file.readline().strip().split(sep=',')
 
+    query_value_exists = False
+
     # should we be converting to floats/ints??
     for line in file:
         entries = line.strip().split(sep=',')
         if query_column is None or entries[query_column] == query_value:
+            query_value_exists = True
             results.append(entries)
 
     file.close()
 
-    if return_header:
+    if query_value is not None and not query_value_exists:
+        warnings.warn("The query_value you entered ('" + query_value + "') is "
+                      "not present", UserWarning)
+        return None
+
+    elif return_header:
         return header, results
 
     else:
