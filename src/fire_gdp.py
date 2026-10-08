@@ -113,7 +113,7 @@ def get_fire_gdp_year_data(co2_file,
         emissions = co2_row[emission_col_index]
         gdp_year_col = get_column_index(gdp_header, year)
         gdp = gdp_data[0][gdp_year_col]
-        if emissions != "":
+        if emissions != "" and gdp != "":
             results.append([int(year), float(emissions), float(gdp)])
 
     return results
