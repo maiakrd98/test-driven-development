@@ -200,6 +200,21 @@ class TestGetFireGdpYearData(unittest.TestCase):
                          str(cm.warning))
         self.assertIsNone(result)
 
+    def test_sweden_fires(self):
+        co2_file = "test/data/Agrofood_co2_emission_test.csv"
+        gdp_file = "test/data/IMF_GDP_test.csv"
+
+        with self.assertWarns(UserWarning) as cm:
+            result = fire_gdp.get_fire_gdp_year_data(co2_file,
+                                                     gdp_file,
+                                                     "Sweden")
+
+        self.assertEqual("The country you entered ('Sweden') "
+                         "is not present in the co2_file "
+                         "('test/data/Agrofood_co2_emission_test.csv')",
+                         str(cm.warning))
+        self.assertIsNone(result)
+
 
 if __name__ == '__main__':
     unittest.main()
