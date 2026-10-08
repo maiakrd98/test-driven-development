@@ -267,6 +267,22 @@ class TestGetFireGdpYearData(unittest.TestCase):
 
         self.assertEqual(result, expected_result)
 
+    def test_nonexistent_emission_name(self):
+        co2_file = "test/data/Agrofood_co2_emission_test.csv"
+        gdp_file = "test/data/IMF_GDP_test.csv"
+        country = "United Republic of Tanzania"
+
+        with self.assertWarns(UserWarning) as cm:
+            result = fire_gdp.get_fire_gdp_year_data(co2_file,
+                                                     gdp_file,
+                                                     country,
+                                                     emission_col_name="Cows")
+
+        self.assertEqual("There is no column in 'test/data/Agrofood_co2"
+                         "_emission_test.csv' titled 'Cows'",
+                         str(cm.warning))
+        self.assertIsNone(result)
+
 
 if __name__ == '__main__':
     unittest.main()
