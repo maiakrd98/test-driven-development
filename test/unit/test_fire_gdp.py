@@ -167,7 +167,23 @@ class TestGetColumnIndex(unittest.TestCase):
 
         self.assertEqual("Warning: you have entered None as a header",
                          str(cm.warning))
-        self.assertIsNone(col_index)   
+        self.assertIsNone(col_index)
+
+
+class TestGetFireGdpYearData(unittest.TestCase):
+
+    def test_canada_fires(self):
+        co2_file = "test/data/Agrofood_co2_emission_test.csv"
+        gdp_file = "test/data/IMF_GDP_test.csv"
+        result = fire_gdp.get_fire_gdp_year_data(co2_file, gdp_file, "Canada")
+
+        expected_result = [[2016, 812.7646, 2025535.00],
+                           [2017, 1248.7836, 2140641.00],
+                           [2018, 3236.4746, 2235675.00],
+                           [2019, 1336.7596, 2313563.00],
+                           [2020, 222.2592, 2209681.00]]
+
+        self.assertEqual(result, expected_result)
 
 
 if __name__ == '__main__':
