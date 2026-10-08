@@ -103,6 +103,14 @@ class TestGetColumnIndex(unittest.TestCase):
                          "please enter either both or neither",
                          str(cm.exception))
 
+    def test_query_val_no_query_col(self):
+        file_name = "test/data/Agrofood_co2_emission_test.csv"
+        with self.assertRaises(SystemExit) as cm:
+            fire_gdp.get_data(file_name, query_value="Japan")
+        self.assertEqual("You input a query_value, but not a query_column, "
+                         "please enter either both or neither",
+                         str(cm.exception))
+
 
 if __name__ == '__main__':
     unittest.main()
