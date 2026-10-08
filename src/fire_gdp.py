@@ -16,7 +16,10 @@ def get_data(file_name,
 
     results = []
 
-    file = open(file_name, 'r')
+    try:
+        file = open(file_name, 'r')
+    except FileNotFoundError:
+        sys.exit("Could not find " + file_name)
 
     header = file.readline().strip().split(sep=',')
 
