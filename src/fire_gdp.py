@@ -6,15 +6,20 @@ def get_data(file_name,
 
     file = open(file_name, 'r')
 
-    # skips first line/header
-    file.readline()
+    header = file.readline().strip().split(sep=',')
 
     # should we be converting to floats/ints??
     for line in file:
         entries = line.strip().split(sep=',')
         results.append(entries)
 
-    return results
+    file.close()
+
+    if return_header:
+        return header, results
+
+    else:
+        return results
 
 
 def get_column_index(header, column_name):
