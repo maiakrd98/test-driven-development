@@ -28,7 +28,14 @@ def get_data(file_name,
     # should we be converting to floats/ints??
     for line in file:
         entries = line.strip().split(sep=',')
-        if query_column is None or entries[query_column] == query_value:
+        if query_column is not None:
+            try:
+                query_entry = entries[query_column]
+            except IndexError:
+                file.close()
+                sys.exit('query_column index (' + str(query_column) +
+                         ') is out of bounds')
+        if query_column is None or query_entry == query_value:
             query_value_exists = True
             results.append(entries)
 
