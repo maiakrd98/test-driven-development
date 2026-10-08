@@ -119,6 +119,18 @@ def get_fire_gdp_year_data(co2_file,
         gdp_year_col = get_column_index(gdp_header, year)
         gdp = gdp_data[0][gdp_year_col]
         if emissions != "" and gdp != "":
-            results.append([int(year), float(emissions), float(gdp)])
+            try:
+                int_year = int(year)
+            except ValueError:
+                sys.exit("Unable to convert '" + year + "' to int")
+            try:
+                float_emissions = float(emissions)
+            except ValueError:
+                sys.exit("Unable to convert '" + emissions + "' to float")
+            try:
+                float_gdp = float(gdp)
+            except ValueError:
+                sys.exit("Unable to convert '" + gdp + "' to float")
+            results.append([int_year, float_emissions, float_gdp])
 
     return results
