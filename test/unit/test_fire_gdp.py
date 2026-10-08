@@ -99,7 +99,7 @@ class TestGetColumnIndex(unittest.TestCase):
         file_name = "test/data/Agrofood_co2_emission_test.csv"
         with self.assertRaises(SystemExit) as cm:
             fire_gdp.get_data(file_name, query_column=0)
-        self.assertEqual("You input a query_column, but not a query_value,"
+        self.assertEqual("You input a query_column, but not a query_value, "
                          "please enter either both or neither",
                          str(cm.exception))
 
