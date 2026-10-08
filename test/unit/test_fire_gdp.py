@@ -161,6 +161,14 @@ class TestGetColumnIndex(unittest.TestCase):
                          str(cm.warning))
         self.assertIsNone(col_index)
 
+    def test_none_header(self):
+        with self.assertWarns(UserWarning) as cm:
+            col_index = fire_gdp.get_column_index(None, "Cows")
+
+        self.assertEqual("Warning: you have entered None as a header",
+                         str(cm.warning))
+        self.assertIsNone(col_index)   
+
 
 if __name__ == '__main__':
     unittest.main()
