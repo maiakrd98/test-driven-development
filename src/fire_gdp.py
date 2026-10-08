@@ -54,6 +54,11 @@ def get_data(file_name,
 
 
 def get_column_index(header, column_name):
+
+    if len(header) == 0:
+        warnings.warn("Warning: you have entered an empty header", UserWarning)
+        return None
+
     try:
         col_index = header.index(column_name)
     except ValueError:
