@@ -54,7 +54,8 @@ def get_data(file_name,
 
 
 def get_column_index(header, column_name):
-    pass
+    col_index = header.index(column_name)
+    return col_index
 
 
 def get_fire_gdp_year_data(co2_file, gdp_file, country):
