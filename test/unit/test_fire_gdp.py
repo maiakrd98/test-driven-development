@@ -63,9 +63,8 @@ class TestGetColumnIndex(unittest.TestCase):
                            ["United Republic of Tanzania",
                             "2020", "5876.0538", "859.0343"]]
         expected_header = ["Area", "Year", "Forest fires", "Crop Residues"]
-        header, result = fire_gdp.get_data("test/data/"
-                                           "Agrofood_co2_emission_test.csv",
-                                           return_header=True)
+        file_name = "test/data/Agrofood_co2_emission_test.csv"
+        header, result = fire_gdp.get_data(file_name, return_header=True)
         self.assertEqual(result, expected_result)
         self.assertEqual(header, expected_header)
 
@@ -75,8 +74,8 @@ class TestGetColumnIndex(unittest.TestCase):
                            ["Spain", "2018", "3.511", "1450.7849"],
                            ["Spain", "2019", "17.5455", "1190.6392"],
                            ["Spain", "2020", "6.1089", "1548.3999"]]
-        result = fire_gdp.get_data("test/data/"
-                                   "Agrofood_co2_emission_test.csv",
+        file_name = "test/data/Agrofood_co2_emission_test.csv"
+        result = fire_gdp.get_data(file_name,
                                    query_column=0,
                                    query_value="Spain")
         self.assertEqual(result, expected_result)
@@ -88,13 +87,21 @@ class TestGetColumnIndex(unittest.TestCase):
                            ["Spain", "2019", "17.5455", "1190.6392"],
                            ["Spain", "2020", "6.1089", "1548.3999"]]
         expected_header = ["Area", "Year", "Forest fires", "Crop Residues"]
-        header, result = fire_gdp.get_data("test/data/"
-                                           "Agrofood_co2_emission_test.csv",
+        file_name = "test/data/Agrofood_co2_emission_test.csv"
+        header, result = fire_gdp.get_data(file_name,
                                            query_column=0,
                                            query_value="Spain",
                                            return_header=True)
         self.assertEqual(result, expected_result)
         self.assertEqual(header, expected_header)
+
+    def test_query_col_no_query_val(self):
+        file_name = "test/data/Agrofood_co2_emission_test.csv"
+        with self.assertRaises(SystemExit) as cm:
+            fire_gdp.get_data(file_name, query_column=0)
+        self.assertEqual("You input a query_column, but not a query_value,"
+                         "please enter either both or neither",
+                         str(cm.exception))
 
 
 if __name__ == '__main__':
