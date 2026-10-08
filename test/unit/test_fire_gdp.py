@@ -6,7 +6,7 @@ sys.path.append("src")  # noqa
 import fire_gdp
 
 
-class TestGetColumnIndex(unittest.TestCase):
+class TestGetData(unittest.TestCase):
 
     def test_all_rows(self):
         expected_result = [["Canada", "2016", "812.7646", "3876.2419"],
@@ -124,12 +124,19 @@ class TestGetColumnIndex(unittest.TestCase):
                          str(cm.warning))
         self.assertIsNone(result)
 
-    def test_get_data_file_not_found(self):
+    def test_file_not_found(self):
         file_name = "test/data/Agrofood_co2_emision_test.csv"
         with self.assertRaises(SystemExit) as cm:
             fire_gdp.get_data(file_name)
         self.assertEqual("Could not find test/data/"
                          "Agrofood_co2_emision_test.csv",
+                         str(cm.exception))
+
+    def test_index_out_of_bounds(self):
+        file_name = "test/data/Agrofood_co2_emission_test.csv"
+        with self.assertRaises(SystemExit) as cm:
+            fire_gdp.get_data(file_name, query_column=44, query_value="Canada")
+        self.assertEqual("query_column index (44) is out of bounds",
                          str(cm.exception))
 
 
