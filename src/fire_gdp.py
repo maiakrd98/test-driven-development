@@ -107,6 +107,11 @@ def get_fire_gdp_year_data(co2_file,
     results = []
 
     emission_col_index = get_column_index(co2_header, emission_col_name)
+    if emission_col_index is None:
+        warnings.warn("There is no column in '" + co2_file +
+                      "' titled '" + emission_col_name + "'",
+                      UserWarning)
+        return None
 
     for co2_row in co2_data:
         year = co2_row[1]
