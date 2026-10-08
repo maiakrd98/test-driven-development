@@ -1,6 +1,7 @@
 import os
 import sys
 import unittest
+import warnings
 sys.path.append("src")  # noqa
 import fire_gdp
 
@@ -110,6 +111,18 @@ class TestGetColumnIndex(unittest.TestCase):
         self.assertEqual("You input a query_value, but not a query_column, "
                          "please enter either both or neither",
                          str(cm.exception))
+
+    def test_query_val_not_present(self):
+        file_name = "test/data/Agrofood_co2_emission_test.csv"
+
+        with self.assertWarns(UserWarning) as cm:
+            result = fire_gdp.get_data(file_name, query_column=0,
+                                       query_value="Gondor")
+
+        self.assertEqual("The query_value you entered ('Gondor') "
+                         "is not present",
+                         str(cm.warning))
+        self.assertIsNone(result)
 
 
 if __name__ == '__main__':
