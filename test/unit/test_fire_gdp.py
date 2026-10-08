@@ -185,6 +185,21 @@ class TestGetFireGdpYearData(unittest.TestCase):
 
         self.assertEqual(result, expected_result)
 
+    def test_japan_fires(self):
+        co2_file = "test/data/Agrofood_co2_emission_test.csv"
+        gdp_file = "test/data/IMF_GDP_test.csv"
+
+        with self.assertWarns(UserWarning) as cm:
+            result = fire_gdp.get_fire_gdp_year_data(co2_file,
+                                                     gdp_file,
+                                                     "Japan")
+
+        self.assertEqual("The country you entered ('Japan') "
+                         "is not present in the gdp_file "
+                         "('test/data/IMF_GDP_test.csv')",
+                         str(cm.warning))
+        self.assertIsNone(result)
+
 
 if __name__ == '__main__':
     unittest.main()
