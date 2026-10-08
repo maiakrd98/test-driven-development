@@ -152,6 +152,15 @@ class TestGetColumnIndex(unittest.TestCase):
         col_index = fire_gdp.get_column_index(header, "Cows")
         self.assertIsNone(col_index)
 
+    def test_empty_header(self):
+        header = []
+        with self.assertWarns(UserWarning) as cm:
+            col_index = fire_gdp.get_column_index(header, "Cows")
+
+        self.assertEqual("Warning: you have entered an empty header",
+                         str(cm.warning))
+        self.assertIsNone(col_index)
+
 
 if __name__ == '__main__':
     unittest.main()
