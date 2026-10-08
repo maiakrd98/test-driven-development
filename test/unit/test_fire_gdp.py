@@ -147,6 +147,11 @@ class TestGetColumnIndex(unittest.TestCase):
         col_index = fire_gdp.get_column_index(header, "Forest fires")
         self.assertEqual(col_index, 2)
 
+    def test_name_ansent(self):
+        header = ["Area", "Year", "Forest fires", "Crop Residues"]
+        col_index = fire_gdp.get_column_index(header, "Cows")
+        self.assertIsNone(col_index)
+
 
 if __name__ == '__main__':
     unittest.main()
