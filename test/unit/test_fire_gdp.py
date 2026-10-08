@@ -64,7 +64,8 @@ class TestGetColumnIndex(unittest.TestCase):
                             "2020", "5876.0538", "859.0343"]]
         expected_header = ["Area", "Year", "Forest fires", "Crop Residues"]
         header, result = fire_gdp.get_data("test/data/"
-                                           "Agrofood_co2_emission_test.csv")
+                                           "Agrofood_co2_emission_test.csv",
+                                           return_header = True)
         self.assertEqual(result, expected_result)
         self.assertEqual(header, expected_header)
 
