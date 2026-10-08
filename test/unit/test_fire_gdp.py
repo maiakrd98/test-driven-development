@@ -233,6 +233,23 @@ class TestGetFireGdpYearData(unittest.TestCase):
 
         self.assertEqual(result, expected_result)
 
+    def test_canada_crops(self):
+        co2_file = "test/data/Agrofood_co2_emission_test.csv"
+        gdp_file = "test/data/IMF_GDP_test.csv"
+        em_name = "Crop Residues"
+
+        result = fire_gdp.get_fire_gdp_year_data(co2_file,
+                                                 gdp_file,
+                                                 "Canada",
+                                                 emission_col_name=em_name)
+
+        expected_result = [[2016, 3876.2419, 2025535.00],
+                           [2017, 3838.6631, 2140641.00],
+                           [2018, 3943.5181, 2235675.00],
+                           [2020, 4246.3211, 2209681.00]]
+
+        self.assertEqual(result, expected_result)
+
 
 if __name__ == '__main__':
     unittest.main()
