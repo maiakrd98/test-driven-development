@@ -54,7 +54,11 @@ def get_data(file_name,
 
 
 def get_column_index(header, column_name):
-    col_index = header.index(column_name)
+    try:
+        col_index = header.index(column_name)
+    except ValueError:
+        return None
+
     return col_index
 
 
