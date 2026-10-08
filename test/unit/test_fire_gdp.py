@@ -283,6 +283,19 @@ class TestGetFireGdpYearData(unittest.TestCase):
                          str(cm.warning))
         self.assertIsNone(result)
 
+    def test_conversion_error(self):
+        co2_file = "test/data/Agrofood_co2_emission_test.csv"
+        gdp_file = "test/data/IMF_GDP_test.csv"
+
+        with self.assertRaises(SystemExit) as cm:
+            fire_gdp.get_fire_gdp_year_data(co2_file,
+                                            gdp_file,
+                                            "Canada",
+                                            emission_col_name="Area")
+
+        self.assertEqual("Unable to convert 'Canada' to float",
+                         str(cm.exception))
+
 
 if __name__ == '__main__':
     unittest.main()
