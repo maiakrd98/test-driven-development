@@ -81,6 +81,21 @@ class TestGetColumnIndex(unittest.TestCase):
                                    query_value="Spain")
         self.assertEqual(result, expected_result)
 
+    def test_one_country_return_header(self):
+        expected_result = [["Spain", "2016", "23.2659", "1400.3544"],
+                           ["Spain", "2017", "62.4373", "1001.3977"],
+                           ["Spain", "2018", "3.511", "1450.7849"],
+                           ["Spain", "2019", "17.5455", "1190.6392"],
+                           ["Spain", "2020", "6.1089", "1548.3999"]]
+        expected_header = ["Area", "Year", "Forest fires", "Crop Residues"]
+        header, result = fire_gdp.get_data("test/data/"
+                                           "Agrofood_co2_emission_test.csv",
+                                           query_column=0,
+                                           query_value="Spain",
+                                           return_header=True)
+        self.assertEqual(result, expected_result)
+        self.assertEqual(header, expected_header)
+
 
 if __name__ == '__main__':
     unittest.main()
