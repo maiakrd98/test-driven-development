@@ -78,10 +78,17 @@ def get_fire_gdp_year_data(co2_file,
                            country,
                            emission_col_name="Forest fires"):
 
-    co2_info = get_data(co2_file,
-                        query_column=0,
-                        query_value=country,
-                        return_header=True)
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        co2_info = get_data(co2_file,
+                            query_column=0,
+                            query_value=country,
+                            return_header=True)
+    if co2_info is None:
+        warnings.warn("The country you entered ('" + country + "') is not "
+                      "present in the co2_file ('" + co2_file + "')",
+                      UserWarning)
+        return None
     co2_header, co2_data = co2_info
 
     with warnings.catch_warnings():
