@@ -11,7 +11,8 @@ def get_data(file_name,
     # should we be converting to floats/ints??
     for line in file:
         entries = line.strip().split(sep=',')
-        results.append(entries)
+        if query_column is None or entries[query_column] == query_value:
+            results.append(entries)
 
     file.close()
 
