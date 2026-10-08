@@ -215,6 +215,24 @@ class TestGetFireGdpYearData(unittest.TestCase):
                          str(cm.warning))
         self.assertIsNone(result)
 
+    def test_spain_crops(self):
+        co2_file = "test/data/Agrofood_co2_emission_test.csv"
+        gdp_file = "test/data/IMF_GDP_test.csv"
+        em_name = "Crop Residues"
+
+        result = fire_gdp.get_fire_gdp_year_data(co2_file,
+                                                 gdp_file,
+                                                 "Spain",
+                                                 emission_col_name=em_name)
+
+        expected_result = [[2016, 1400.3544, 1114420.00],
+                           [2017, 1001.3977, 1162492.00],
+                           [2018, 1450.7849, 1203859.00],
+                           [2019, 1190.6392, 1245513.00],
+                           [2020, 1548.3999, 1119010.00]]
+
+        self.assertEqual(result, expected_result)
+
 
 if __name__ == '__main__':
     unittest.main()
