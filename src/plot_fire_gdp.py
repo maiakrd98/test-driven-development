@@ -58,12 +58,19 @@ def main():
                                                         args.gdp_file,
                                                         args.country,
                                                         args.y_variable)
-        warning_found = any("The country you entered ('" + args.country +
-                            "') is not present" in str(w.message)
-                            for w in caught_warnings)
-        if warning_found:
+
+        country_warning_found = any("The country you entered ('" +
+                                    args.country +
+                                    "') is not present" in str(w.message)
+                                    for w in caught_warnings)
+        if country_warning_found:
             sys.exit(args.country + " is not a country in " + args.co2_file +
                      " and/or " + args.gdp_file)
+
+        header_warning_found = any("There is no column in" in str(w.message)
+                                   for w in caught_warnings)
+        if header_warning_found:
+            sys.exit(args.y_variable + " is not a header in " + args.co2_file)
 
     for row in fire_gdp_data:
         X.append(row[2])
