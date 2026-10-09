@@ -1,6 +1,7 @@
 import os
 import sys
 import unittest
+import random
 import warnings
 sys.path.append("src")  # noqa
 import fire_gdp
@@ -139,6 +140,22 @@ class TestGetData(unittest.TestCase):
         self.assertEqual("query_column index (44) is out of bounds",
                          str(cm.exception))
 
+    def test_random_within_bounds(self):
+        countries = ["Canada", "Japan", "Spain", "United Republic of Tanzania"]
+        file_name = "test/data/Agrofood_co2_emission_test.csv"
+        for i in range(100):
+            index = random.randint(0, 3)
+
+            result = fire_gdp.get_data(file_name,
+                                       query_column=0,
+                                       query_value=countries[index])
+
+            for row in result:
+                for entry in row[2:]:
+                    if entry != "":
+                        self.assertTrue(float(entry) < 9600)
+                        self.assertTrue(float(entry) > 3)
+
 
 class TestGetColumnIndex(unittest.TestCase):
 
@@ -168,6 +185,15 @@ class TestGetColumnIndex(unittest.TestCase):
         self.assertEqual("Warning: you have entered None as a header",
                          str(cm.warning))
         self.assertIsNone(col_index)
+
+    def test_random_header(self):
+        header = []
+        for k in range(2, 101):
+            header.append(str(k))
+        for i in range(1000):
+            col_title = random.randint(2, 100)
+            result = fire_gdp.get_column_index(header, str(col_title))
+            self.assertEqual(col_title - 2, result)
 
 
 class TestGetFireGdpYearData(unittest.TestCase):
@@ -295,6 +321,23 @@ class TestGetFireGdpYearData(unittest.TestCase):
 
         self.assertEqual("Unable to convert 'Canada' to float",
                          str(cm.exception))
+
+    def test_random(self):
+        co2_file = "test/data/Agrofood_co2_emission_test.csv"
+        gdp_file = "test/data/IMF_GDP_test.csv"
+        countries = ["Canada", "Spain", "United Republic of Tanzania"]
+
+        for i in range(100):
+            index = random.randint(0, 2)
+
+            result = fire_gdp.get_fire_gdp_year_data(co2_file,
+                                                     gdp_file,
+                                                     countries[index])
+
+            for row in result:
+                self.assertTrue(row[0] <= 2020 and row[0] >= 2016)
+                self.assertTrue(row[1] <= 9600 and row[1] >= 3)
+                self.assertTrue(row[2] <= 180000000 and row[2] >= 1110000)
 
 
 if __name__ == '__main__':
