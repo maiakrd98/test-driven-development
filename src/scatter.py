@@ -1,14 +1,13 @@
-import sys
 import argparse
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import fire_gdp
+
 
 def main():
     parser = argparse.ArgumentParser(
                         prog='scatter',
-                        description='Makes scatter plots') # improve this
+                        description='Make a scatter plot of GDP vs a given '
+                                    'emission type for a given country')
 
     parser.add_argument('--co2_file',
                         type=str,
@@ -30,9 +29,10 @@ def main():
                         help='Plot title',
                         required=True)
 
-    parser.add_argument('--x_axis_label',
+    parser.add_argument('--y_variable',
                         type=str,
-                        help='Label for x-axis',
+                        help="Variable to plot on the y-axis "
+                             "(one of the headers of co2_file)",
                         required=True)
 
     parser.add_argument('--y_axis_label',
@@ -40,24 +40,35 @@ def main():
                         help='Label for y-axis',
                         required=True)
 
+    parser.add_argument('--country',
+                        type=str,
+                        help='Country to plot data for',
+                        required=True)
+
     args = parser.parse_args()
 
     X = []
     Y = []
-    for l in open(args.data_file):
-        A = l.rstrip().split()
-        X.append(float(A[0]))
-        Y.append(float(A[1]))
+
+    fire_gdp_data = fire_gdp.get_fire_gdp_year_data(args.co2_file,
+                                                    args.gdp_file,
+                                                    args.country,
+                                                    args.y_variable)
+
+    for row in fire_gdp_data:
+        X.append(row[2])
+        Y.append(row[1])
 
     fig, ax = plt.subplots()
-    ax.scatter(X,Y)
+    ax.scatter(X, Y)
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
-    ax.set_xlabel(args.x_axis_label)
+    ax.set_xlabel('GDP')
     ax.set_ylabel(args.y_axis_label)
     ax.set_title(args.title)
 
-    plt.savefig(args.out_file,bbox_inches='tight')
+    plt.savefig(args.out_file, bbox_inches='tight')
+
 
 if __name__ == "__main__":
     main()
