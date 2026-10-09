@@ -67,28 +67,28 @@ We will analyze the relationship between a country's gross domestic product (GDP
 
 ### Results
 
-![GDP vs Carbon Emissions in Canada](pplots/canada_gdp_emissions.png)
+![GDP vs Carbon Emissions in Canada](plots/canada_gdp_emissions.png)
 Canada does not appear to have a straightforword relationship between GDP and carbon emissions. There are several different clusters of data points and within each one there seems to be a slight positive relationship between GDP and total emissions, but those overall there is not a clear relationship.
 
-![GDP vs Carbon Emissions in Tanzania](pplots/tanzania_gdp_emissions.png)
+![GDP vs Carbon Emissions in Tanzania](plots/tanzania_gdp_emissions.png)
 Although there are fewer years of data for Tanzania, it has a strong positive relation relationship between GDP and total carbon emissions. This fits with our hypothesis.
 
-![GDP vs Carbon Emissions in Brazil](pplots/brazil_gdp_emissions.png)
+![GDP vs Carbon Emissions in Brazil](plots/brazil_gdp_emissions.png)
 Like Canada, Brazil has clusters of data and within each one there seems to be a  positive relationship between GDP and total emissions. However the cluster with overall higher GDP has lower overall emissions, which complicates the relationship.
 
-![GDP vs Carbon Emissions in Honduras](pplots/honduras_gdp_emissions.png)
+![GDP vs Carbon Emissions in Honduras](plots/honduras_gdp_emissions.png)
 Honduras has a positive relationship between GDP and carbon emissions, although it is more noisy than Tanzania's. This also its with our hypothesis.
 
-![GDP vs Emissions in South Africa](pplots/south_africa_gdp_emissions.png)
+![GDP vs Emissions in South Africa](plots/south_africa_gdp_emissions.png)
 South Africa has a clear positive relationship between GDP and total carbon emissions, which supports our hypothesis. However, it doesn't appear to be fully linear, but rather starts to level out at higher GDP values.
 
-![GDP vs Emissions in Gabon](pplots/gabon_gdp_emissions.png)
+![GDP vs Emissions in Gabon](plots/gabon_gdp_emissions.png)
 Gabon does not have a straightforward relationship between GDP and carbon emissions.
 
-![GDP vs Emissions in India](pplots/india_gdp_emissions.png)
+![GDP vs Emissions in India](plots/india_gdp_emissions.png)
 India has a positive relationship between GDP and total carbon emissions, which appears to be roughly linear. This supports our hypothesis. 
 
-![GDP vs Emissions in China](pplots/china_gdp_emissions.png)
+![GDP vs Emissions in China](plots/china_gdp_emissions.png)
 China has a positive relationship between GDP and total carbon emissions, but like South Africa the relationship becomes less steep at higher GDP values. This also supports our hypothesis.
 
 Overall, some countries (Tanzania, Honduras, South Africa, India, China) have clear positive relationships between GDP and total carbon relationships, while others (Canada, Brazil, Gabon) have more complicated relationships. Therefore, while our hypothesis has some support, the situation is more complicated. 
