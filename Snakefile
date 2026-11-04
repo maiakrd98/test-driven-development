@@ -1,15 +1,15 @@
-countries = ["Brazil", "Canada", "China", "Gabon", "Honduras", "India"]
+countries = ["Brazil", "Canada", "China", "Gabon", "Honduras", "India", "Afghanistan", "Algeria", "Angola", "Argentina", "Australia", "Bangladesh", "Botswana", "Egypt", "Sweden", "Spain", "Japan", "Kenya", "Malawi", "Mexico", "Peru", "Thailand", "Zambia"]
 
 rule all:
     input:
-        expand("plots/{country}_gdp_emissions.png", country=countries)
+        expand("plots/{country}_GDP_emissions.png", country=countries)
 
 rule create_plots:
     input:
         co2="data/Agrofood_co2_emission.csv",
         gdp="data/IMF_GDP.csv"
     output:
-        "plots/{country}_gdp_emissions.png"
+        "plots/{country}_GDP_emissions.png"
     shell:
         """
         python src/plot_fire_gdp.py \
