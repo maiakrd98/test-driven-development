@@ -23,7 +23,7 @@ Then activate the environment by running
 mamba activate swe4s
 ```
 
-This environment contains `pycodestyle` for checking that python code is compliant with the PEP 8 style guide, `wget` for running the functional test file, and `matplotlib` for plotting.
+This environment contains `pycodestyle` for checking that python code is compliant with the PEP 8 style guide, `wget` for running the functional test file, `matplotlib` and `graphviz` for plotting, and `snakemake` for workflow management.
 
 Next, run
 ```
@@ -60,73 +60,84 @@ bash test/func/test_fire_gdp.sh
 
 These tests also run automatically as a github action anytime you push to the remote repository or submit a pull request. This is controlled through the `test.yml` file in the `.github/workflows` directory.
 
+`Snakefile` specifies a workflow to automatically run the required code to produce plots for the desired countries. You can run this file by running the following command from the main directory of the repository:
+```
+snakemake -c 1
+```
+This will run `src/plot_fire_gdp.py` with necessary inputs to produce all the plots in the following section. Note that `-c 1` just specifies the number of cores to use, so you could run it with more cores (e.g. `-c 4`) if you want.
+
 ## Exploring the relationship between GDP and emissions
 
 ### Introduction
-We will analyze the relationship between a country's gross domestic product (GDP) and its total carbon emissions by year. Since each country's GDP is in a different currency, they are not directly comparable, so we will examine several countries individually. I hypothesize that GDP and total carbon emissions will have a positive relationship, especially for lower-income countries whose economies (at least in some cases) are growing partly by becoming more industrialized and releasing more emissions. We will look at Canada, Tanzania, Brazil, Honduras, South Africa, Gabon, India, and China. 
+We will analyze the relationship between a country's gross domestic product (GDP) and its total carbon emissions by year. Since each country's GDP is in a different currency, they are not directly comparable, so we will examine several countries individually. I hypothesize that GDP and total carbon emissions will have a positive relationship, especially for lower-income countries whose economies (at least in some cases) are growing partly by becoming more industrialized and releasing more emissions. We will look at Brazil, Canada, China, Gabon, Honduras, India, Afghanistan, Algeria, Angola, Argentina, Australia, Bangladesh, Botswana, Egypt, Sweden, Spain, Japan, Kenya, Malawi, Mexico, Peru, Thailand, and Zambia. 
 
 ### Results
 
-![GDP vs Carbon Emissions in Canada](plots/canada_gdp_emissions.png)
+Some countries have a clear positive relationship between GDP and total carbon emissions. These include Afghanistan, Algeria, Bangladesh, China, Honduras, India, Malawi, Peru, and Thailand, (see below for plots). In some of these countries (Bangladesh and China), the trend appears to level off, but overall, the relationship between GDP and carbon emissions in these countries is consistent with our hypothesis. 
 
-Canada does not appear to have a straightforword relationship between GDP and carbon emissions. There are several different clusters of data points and within each one there seems to be a slight positive relationship between GDP and total emissions, but those overall there is not a clear relationship.
+![GDP vs Carbon Emissions in Afghanistan](plots/Afghanistan_GDP_emissions.png)
+![GDP vs Carbon Emissions in Algeria](plots/Algeria_GDP_emissions.png)
+![GDP vs Carbon Emissions in Bangladesh](plots/Bangladesh_GDP_emissions.png)
+![GDP vs Carbon Emissions in China](plots/China_GDP_emissions.png)
+![GDP vs Carbon Emissions in Honduras](plots/Honduras_GDP_emissions.png)
+![GDP vs Carbon Emissions in India](plots/India_GDP_emissions.png)
+![GDP vs Carbon Emissions in Malawi](plots/Malawi_GDP_emissions.png)
+![GDP vs Carbon Emissions in Peru](plots/Peru_GDP_emissions.png)
+![GDP vs Carbon Emissions in Thailand](plots/Thailand_GDP_emissions.png)
 
-![GDP vs Carbon Emissions in Tanzania](plots/tanzania_gdp_emissions.png)
+In Egypt, there is a steep positive relationship between GDP and emissions at lower GDP values, but that relationship completely disappears at higher GDP values, where the line is almost completely flat. This is somewhat consistent with our hypothesis, but indicates that the situation is more complicated - some countries may reach a threshold where they no longer require higher emissions to increase their GDP.
 
-Although there are fewer years of data for Tanzania, it has a strong positive relation relationship between GDP and total carbon emissions. This fits with our hypothesis.
+![GDP vs Carbon Emissions in Egypt](plots/Egypt_GDP_emissions.png)
 
-![GDP vs Carbon Emissions in Brazil](plots/brazil_gdp_emissions.png)
+In Spain and to a lesser extent Zambia display a pattern in which emissions at first rise as GDP increases, but then start to drop at larger GDP values. This also complicates our hypothesis.
 
-Like Canada, Brazil has clusters of data and within each one there seems to be a  positive relationship between GDP and total emissions. However the cluster with overall higher GDP has lower overall emissions, which complicates the relationship.
+![GDP vs Carbon Emissions in Spain](plots/Spain_GDP_emissions.png)
+![GDP vs Carbon Emissions in Zambia](plots/Zambia_GDP_emissions.png)
 
-![GDP vs Carbon Emissions in Honduras](plots/honduras_gdp_emissions.png)
+Some countries, including Argentina, Australia, and Sweden, have a negative relationship between GDP and carbon emissions, which is not consistent with our hypothesis.
 
-Honduras has a positive relationship between GDP and carbon emissions, although it is more noisy than Tanzania's. This also its with our hypothesis.
+![GDP vs Carbon Emissions in Argentina](plots/Argentina_GDP_emissions.png)
+![GDP vs Carbon Emissions in Australia](plots/Australia_GDP_emissions.png)
+![GDP vs Carbon Emissions in Sweden](plots/Sweden_GDP_emissions.png)
 
-![GDP vs Emissions in South Africa](plots/south_africa_gdp_emissions.png)
+In Angola, Japan, and Botswana, there is no clear relationship between GDP and carbon emissions, which doesn't support our hypothesis.
 
-South Africa has a clear positive relationship between GDP and total carbon emissions, which supports our hypothesis. However, it doesn't appear to be fully linear, but rather starts to level out at higher GDP values.
+![GDP vs Carbon Emissions in Angola](plots/Angola_GDP_emissions.png)
+![GDP vs Carbon Emissions in Japan](plots/Japan_GDP_emissions.png)
+![GDP vs Carbon Emissions in Botswana](plots/Botswana_GDP_emissions.png)
 
-![GDP vs Emissions in Gabon](plots/gabon_gdp_emissions.png)
+In some countries (Brazil, Canada, Gabon, Kenya, and Mexico), there appears to be an odd stepwise relationship between GDP and carbon emissions where there are different clusters of data points and within each cluster the emissions are roughly flat (or increasing in Mexico's case). I'm not sure what could be causing this, but one possibility is that the way that emissions were measured in those countries changed several times and caused large jumps (both up and down) in the reported emissions.
 
-Gabon does not have a straightforward relationship between GDP and carbon emissions.
+![GDP vs Carbon Emissions in Brazil](plots/Brazil_GDP_emissions.png)
+![GDP vs Carbon Emissions in Canada](plots/Canada_GDP_emissions.png)
+![GDP vs Carbon Emissions in Gabon](plots/Gabon_GDP_emissions.png)
+![GDP vs Carbon Emissions in Kenya](plots/Kenya_GDP_emissions.png)
+![GDP vs Carbon Emissions in Mexico](plots/Mexico_GDP_emissions.png)
 
-![GDP vs Emissions in India](plots/india_gdp_emissions.png)
-
-India has a positive relationship between GDP and total carbon emissions, which appears to be roughly linear. This supports our hypothesis. 
-
-![GDP vs Emissions in China](plots/china_gdp_emissions.png)
-
-China has a positive relationship between GDP and total carbon emissions, but like South Africa the relationship becomes less steep at higher GDP values. This also supports our hypothesis.
-
-Overall, some countries (Tanzania, Honduras, South Africa, India, China) have clear positive relationships between GDP and total carbon relationships, while others (Canada, Brazil, Gabon) have more complicated relationships. Therefore, while our hypothesis has some support, the situation is more complicated. 
+Overall, our hypothesis has some support, but the situation is certainly more complicated than a straightforward positive relationship between GDP and carbon emissions. 
 
 ### Methods
 
-To analyze the data, I aligned GDP and total emission data by year and created scatter plots of that data using `src/plot_fire_gdp.py`. To create each plot, run the following commands.  
+To analyze the data, I aligned GDP and total emission data by year and created scatter plots of that data using `src/plot_fire_gdp.py`. To create all plots using the snakemake workflow manager, run
+
+```
+snakemake -c 1
+```
+
+You can also create plots individually by running `src/plot_fire_gdp.py` directly, for example:
 
 Canada:
 ```
 python src/plot_fire_gdp.py \
     --co2_file 'data/Agrofood_co2_emission.csv' \
     --gdp_file 'data/IMF_GDP.csv' \
-    --out_file 'plots/canada_gdp_emissions.png' \
+    --out_file 'plots/Canada_GDP_emissions.png' \
     --title 'GDP vs Carbon Emissions in Canada' \
     --y_axis_label 'Total Emissions' \
     --y_variable 'total_emission' \
     --country 'Canada'
 ```
 
-Tanzania:
-```
-python src/plot_fire_gdp.py \
-    --co2_file 'data/Agrofood_co2_emission.csv' \
-    --gdp_file 'data/IMF_GDP.csv' \
-    --out_file 'plots/tanzania_gdp_emissions.png' \
-    --title 'GDP vs Carbon Emissions in Tanzania' \
-    --y_axis_label 'Total Emissions' \
-    --y_variable 'total_emission' \
-    --country 'United Republic of Tanzania'
 ```
 
 Brazil:
@@ -134,69 +145,25 @@ Brazil:
 python src/plot_fire_gdp.py \
     --co2_file 'data/Agrofood_co2_emission.csv' \
     --gdp_file 'data/IMF_GDP.csv' \
-    --out_file 'plots/brazil_gdp_emissions.png' \
+    --out_file 'plots/Brazil_GDP_emissions.png' \
     --title 'GDP vs Carbon Emissions in Brazil' \
     --y_axis_label 'Total Emissions' \
     --y_variable 'total_emission' \
     --country 'Brazil'
 ```
 
-Honduras:
-```
-python src/plot_fire_gdp.py \
-    --co2_file 'data/Agrofood_co2_emission.csv' \
-    --gdp_file 'data/IMF_GDP.csv' \
-    --out_file 'plots/honduras_gdp_emissions.png' \
-    --title 'GDP vs Carbon Emissions in Honduras' \
-    --y_axis_label 'Total Emissions' \
-    --y_variable 'total_emission' \
-    --country 'Honduras'
-```
+## Testing snakemake workflow
+To test the snakemake workflow, we could check that the correct files are produced using a method similar to the functional tests. In this case, that would be the files `plots/Afghanistan_GDP_emissions.png`, ..., `plots/Zambia_GDP_emissions.png`. We could also check that no additional files are created. Also, we could test that the expected python scripts were run, although I'm not sure how to do that. In this scenario, I don't know of a way to check that the contents of the plots are correct, but for a different snakemake workflow that produced csvs or other file types, we could check that the contents were right.
 
-South Africa:
-```
-python src/plot_fire_gdp.py \
-    --co2_file 'data/Agrofood_co2_emission.csv' \
-    --gdp_file 'data/IMF_GDP.csv' \
-    --out_file 'plots/south_africa_gdp_emissions.png' \
-    --title 'GDP vs Carbon Emissions in South Africa' \
-    --y_axis_label 'Total Emissions' \
-    --y_variable 'total_emission' \
-    --country 'South Africa'
-```
+## Update history
 
-Gabon:
-```
-python src/plot_fire_gdp.py \
-    --co2_file 'data/Agrofood_co2_emission.csv' \
-    --gdp_file 'data/IMF_GDP.csv' \
-    --out_file 'plots/gabon_gdp_emissions.png' \
-    --title 'GDP vs Carbon Emissions in Gabon' \
-    --y_axis_label 'Total Emissions' \
-    --y_variable 'total_emission' \
-    --country 'Gabon'
-```
+### v1.0
+- Initial project
+- Implemented `get_data`, `get_column_index`, and `get_fire_gdp_year_data` functions
+- Wrote `plot_fire_gdp.py` to create scatter plots of GDP vs carbon emissions
+- Unit and functional tests
+- Plotted and analyzed relationship between GDP and total carbon emissions for eight countries
 
-India:
-```
-python src/plot_fire_gdp.py \
-    --co2_file 'data/Agrofood_co2_emission.csv' \
-    --gdp_file 'data/IMF_GDP.csv' \
-    --out_file 'plots/india_gdp_emissions.png' \
-    --title 'GDP vs Carbon Emissions in India' \
-    --y_axis_label 'Total Emissions' \
-    --y_variable 'total_emission' \
-    --country 'India'
-```
-
-China:
-```
-python src/plot_fire_gdp.py \
-    --co2_file 'data/Agrofood_co2_emission.csv' \
-    --gdp_file 'data/IMF_GDP.csv' \
-    --out_file 'plots/china_gdp_emissions.png' \
-    --title 'GDP vs Carbon Emissions in China' \
-    --y_axis_label 'Total Emissions' \
-    --y_variable 'total_emission' \
-    --country 'China'
-```
+### v2.0
+- Added `Snakefile` to manage workflow and automatically run necessary code to create scatter plots
+- Plotted and analyzed relationship between GDP and total carbon emissions for 23 countries

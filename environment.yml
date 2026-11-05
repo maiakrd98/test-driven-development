@@ -1,7 +1,11 @@
 name: swe4s
 channels:
+  - bioconda
   - conda-forge
 dependencies:
+  - graphviz
   - matplotlib
+  - numpy
   - pycodestyle
+  - snakemake
   - wget
