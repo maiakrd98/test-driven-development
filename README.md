@@ -152,6 +152,9 @@ python src/plot_fire_gdp.py \
     --country 'Brazil'
 ```
 
+## Testing snakemake workflow
+To test the snakemake workflow, we could check that the correct files are produced using a method similar to the functional tests. In this case, that would be the files `plots/Afghanistan_GDP_emissions.png`, ..., `plots/Zambia_GDP_emissions.png`. We could also check that no additional files are created. Also, we could test that the expected python scripts were run, although I'm not sure how to do that. In this scenario, I don't know of a way to check that the contents of the plots are correct, but for a different snakemake workflow that produced csvs or other file types, we could check that the contents were right.
+
 ## Update history
 
 ### v1.0
