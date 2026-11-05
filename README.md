@@ -138,8 +138,6 @@ python src/plot_fire_gdp.py \
     --country 'Canada'
 ```
 
-```
-
 Brazil:
 ```
 python src/plot_fire_gdp.py \
